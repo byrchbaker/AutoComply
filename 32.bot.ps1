@@ -1,5 +1,4 @@
-if ([System.Environment]::Is64BitProcess) {
-    $choice = Read-Host -Prompt "[0] Download STIGs and SCAP Security Appliance Checker`n[1] Download Dod GPOs (these fix the problems that scap detected)"
+$choice = Read-Host -Prompt "[0] Download STIGs and SCAP Security Appliance Checker`n[1] Download Dod GPOs (these fix the problems that scap detected)"
     if ($choice -eq 0) {
         # Load the HTML Agility Pack assembly
         Add-Type -Path '.\HtmlAgilityPack.dll'
@@ -153,16 +152,6 @@ if ([System.Environment]::Is64BitProcess) {
                 Start-process -FilePath "LGPO.exe" -ArgumentList "/g", "$($gpo.FullName)" -Wait
             }
         }
-    } else {
-        Write-Host "Invalid input"
-    }
 } else {
-    # 32-Bit : Needs Powershell Core
-
-    # Downloading Powershell Core
-    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) 
-    choco install powershell-core -y
-
-    pwsh -File "$PSScriptRoot\32.bot.ps1"
-
+        Write-Host "Invalid input"
 }
