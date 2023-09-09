@@ -160,14 +160,13 @@ if ([System.Environment]::Is64BitProcess) {
     # 32-Bit : Needs Powershell Core
 
     # Downloading Powershell Core
-    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) 
-    choco install powershell-core -y
+    Set-ExecutionPolicy Bypass -Scope Process -Force; Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1')) *> $Null
+    choco install powershell-core -y *> $Null
 
     # Test the location of powershell core
     if (Test-Path -Path "C:\Program Files\PowerShell\7") {
-        & "$env:ProgramFiles\PowerShell\7\pwsh.exe" -FilePath "$PSScriptRoot\32.bot.ps1"
+        & "$env:ProgramFiles\PowerShell\7\pwsh.exe" -File "$PSScriptRoot\32.bot.ps1"
     } else {
-        & "${env:ProgramFiles(x86)}\PowerShell\7\pwsh.exe" -Filepath "$PSScriptRoot\32.bot.ps1"
+        & "${env:ProgramFiles(x86)}\PowerShell\7\pwsh.exe" -File "$PSScriptRoot\32.bot.ps1"
     }
-
 }
